@@ -1,0 +1,4 @@
+1、文件上传
+	a、在spring-mvc.xml中配置文件上传的类
+	b、表单属性需要设置eactype=multipart/form-data
+2、自定义拦截器

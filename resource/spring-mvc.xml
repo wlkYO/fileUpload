@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+	<!-- 1、包扫描路径 -->
+	<context:component-scan base-package="com.hpeu.controller"/>
+	
+	<!-- 2、是否开启注解 -->
+	<mvc:annotation-driven/>
+	
+	<!-- 3、设置默认放行的文件和目录 -->
+	<mvc:default-servlet-handler/>
+	
+	<!-- 4、配置视图解析器  -->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		 <!-- 配置视图解析前缀 -->
+		 <property name="prefix" value="/WEB-INF/pages/"/>
+   		 <!-- 配置视图解析后缀 -->
+   		 <property name="suffix" value=".jsp"/>
+	</bean>	
+	
+	<!-- 5、配置文件上传 -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">   
+		<!-- 文件上传的最大值 -->
+		<property name="maxUploadSize" value="102400000000"/><!-- 字节 -->
+		<!-- 设置文件的默认字符集 -->
+		<property name="defaultEncoding" value="utf8"/>
+	</bean>
+	
+	<!-- 6、自定义拦截器 -->
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<!--  拦截路径，-->
+			<mvc:mapping path="/**"/>
+			<!--自定义拦截器类  -->
+			<bean class="interceptor.LoginHandle"></bean>
+		</mvc:interceptor>
+	</mvc:interceptors>
+</beans>
